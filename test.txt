@@ -1,0 +1,248 @@
+def hastags():
+    data_Hashtags = selected_wordcloud_data[selected_wordcloud_data['hashtag'].notna()]
+    data_Hashtags=data_Hashtags[data_Hashtags['hashtag'] != "['']"]
+    data_Hashtags=data_Hashtags.reset_index()
+    data_Hashtags=data_Hashtags['hashtag']
+    hastags_list=[]
+    for i in data_Hashtags:
+      for j in i:
+        hastags_list.append(j)
+    unique_numbers = set(hastags_list)
+    unique_list=list(unique_numbers)
+    hastag_count=[]
+    for i in unique_list:
+      count=hastags_list.count(i)
+      hastag_count.append([i,count])
+    hashtag_df = pd.DataFrame(hastag_count,columns=['hashtag','count'])
+    return hashtag_df
+
+hashtagg_data = hastags()
+fig = px.bar(hashtagg_data, x='hashtag', y='count')
+st.plotly_chart(fig,use_container_width = True)    
+
+
+
+
+
+
+from streamlit_card import card
+cola,colb=st.columns(2)
+with cola:
+    card(title="Hello World!", text="Some description", image="https://thumbs.dreamstime.com/b/berlin-germany-jan-twitter-social-media-blue-bird-sign-logo-symbol-minimalist-design-painted-over-white-brick-wall-background-137526023.jpg") 
+
+with colb:
+    card(title="Hello World", text="Some description") 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    #fig.update_layout(legend = dict(font = dict(family = "Courier", size = 2, color = "white")), legend_title = dict(font = dict(family = "Courier", size = 1, color = "white")))
+    fig.update_layout(legend=dict(orientation="h",yanchor="bottom",y=1.02,xanchor="right",x=1))
+    fig.update_layout(paper_bgcolor='black')
+    fig.update_layout(margin=dict(l=0, r=0, t=0, b=0))
+    fig.update_layout(plot_bgcolor='LightSteelBlue')
+    fig.update_layout(font_color='white')
+    fig.update_xaxes(showgrid=False)
+    fig.update_xaxes(linecolor="#BCCCDC")
+    fig.update_yaxes(showgrid=False)
+    fig.update_yaxes(linecolor="#BCCCDC")
+
+
+
+
+
+
+#legend
+fig.update_layout(showlegend=False)
+
+#x axis
+fig.update_xaxes(visible=False)
+fig.update_xaxes(showticklabels = False)
+#y axis    
+fig.update_yaxes(visible=False)
+
+
+fig.update_traces(textposition='top center', textfont_size=14, textfont_color='White')  # text color  changing
+
+
+
+
+
+
+# important
+
+
+)
+    fig.update_xaxes(showgrid=False)
+    fig.update_yaxes(showgrid=False)
+    fig.update_xaxes(showticklabels = False)
+    fig.update_yaxes(showticklabels = False)
+    fig.update_layout(paper_bgcolor="Black")
+    fig.update_layout(plot_bgcolor="Black")
+    fig.update_traces(textposition='top center')
+    fig.update_layout(title_font_color='White')
+    fig.update_layout(legend_font_color='White')
+    fig.update_traces(textposition='top center', textfont_color='White')
+    fig.update_layout(legend_bgcolor='Black')
+    fig.update_layout(legend_bordercolor='gray')
+    fig.update_layout(legend_borderwidth=0.5)
+    fig.update_xaxes(color='white') 
+    fig.update_yaxes(color='white') 
+
+
+
+        fig. update(layout_showlegend=False) 
+
+
+
+select_page = option_menu(menu_title=None,options=['Twitter','Facebook','Instagram'],icons=['twitter','facebook','instagram'],default_index=0,orientation='horizontal')    # navbar
+
+
+
+
+
+title  :
+
+
+def tiles():
+
+    col1, col2, col3, col4, col5 = st.columns(5)
+
+    with col1:
+        st.metric('Total Tweets',int(selected_leader_ul_data['total_tweets'].iloc[0]), delta=None, delta_color="normal")
+        
+    with col2:
+        st.metric('Average Likes Per Tweet',round(int(selected_leader_ul_data['total_likes'].iloc[0])/int(selected_leader_ul_data['total_tweets'].iloc[0])), delta=None, delta_color="normal")
+
+    with col3:
+        st.metric('Average Replies Per Tweet',round(int(selected_leader_ul_data['total_replies'].iloc[0])/int(selected_leader_ul_data['total_tweets'].iloc[0])), delta=None, delta_color="normal")
+        
+    with col4:
+        st.metric('Average Retweets Per Tweet',round(int(selected_leader_ul_data['total_retweets'].iloc[0])/int(selected_leader_ul_data['total_tweets'].iloc[0])), delta=None, delta_color="normal")
+
+    with col5:  
+        st.metric('Average Quotes Per Tweet',round(int(selected_leader_ul_data['total_quotes'].iloc[0])/int(selected_leader_ul_data['total_tweets'].iloc[0])), delta=None, delta_color="normal")
+
+
+
+
+
+
+
+
+
+
+
+
+
+# sentiment wise hashtags:
+
+
+pos_hashtagg_data = find_hashtag_fre(selected_positive_wordcloud_data)
+fig = px.bar(pos_hashtagg_data, y='hashtag', x='count',color='username', orientation='h',title='Positive Hashtags Frequency')
+st.plotly_chart(fig,use_container_width = True)    
+
+
+neg_hashtagg_data = find_hashtag_fre(selected_negative_wordcloud_data)
+fig = px.bar(neg_hashtagg_data, y='hashtag', x='count',color='username', orientation='h',title='Negative Hashtags Frequency')
+st.plotly_chart(fig,use_container_width = True)    
+
+
+neu_hashtagg_data = find_hashtag_fre(selected_neutral_wordcloud_data)
+fig = px.bar(neu_hashtagg_data, y='hashtag', x='count',color='username', orientation='h',title='Neutral Hashtags Frequency')
+st.plotly_chart(fig,use_container_width = True)    
+
+
+
+
+
+# sentiment wise mentions
+pos_mensions_data = find_mentions_fre(selected_positive_wordcloud_data)
+fig = px.bar(pos_mensions_data, y='mentions', x='count',color='username', orientation='h',title='Positive mensions Frequency')
+st.plotly_chart(fig,use_container_width = True)    
+
+neg_mensions_data = find_mentions_fre(selected_negative_wordcloud_data)
+fig = px.bar(neg_mensions_data, y='mentions', x='count',color='username', orientation='h',title='negative mensions Frequency')
+st.plotly_chart(fig,use_container_width = True)    
+
+
+neu_mensions_data = find_mentions_fre(selected_neutral_wordcloud_data)
+fig = px.bar(neu_mensions_data, y='mentions', x='count',color='username', orientation='h',title='neutral mensions Frequency')
+st.plotly_chart(fig,use_container_width = True)    
+
+
+
+
+# twitter mentions data
+@st.cache(allow_output_mutation=True)
+def over_all_twitter_mentions_data(username, fromm, to):
+    con=conn()
+    username = tuple(username)
+    selected_users_query = "select * from twitter_leaders_mentions_level_final_table where mentioned_user in :username and computed_date >= :fromm and computed_date <= :to"
+    params = {"username" : username, 'fromm': fromm, 'to':to }
+    t = text(selected_users_query)
+    selected_users_info = pd.read_sql(t, con, params=params)
+    return selected_users_info
+
+
+
+# button at last of columns
+
+
+
+
+
+
+
+
+
+
+# login logic
+
+
+
+
+connection = conn()
+username = ['mindshare','mugilan']
+password = ['mindshare','mugilan']
+
+hashed_password = stauth.Hasher(password).generate()   
+
+data = pd.DataFrame(list(zip(username,hashed_password)),columns=['username','password'])
+
+connection = conn()
+
+data.to_sql("social_media_dashboard_login_authentication",con=connection ,if_exists="replace", index=False)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
